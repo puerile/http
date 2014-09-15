@@ -27,7 +27,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     {
         super.onResume();
 //        initSummary();
-//        updatePrefSummary(getPreferenceManager().getSharedPreferences(),findPreference(CALLBACK_URL));
+//      //  updatePrefSummary(getPreferenceManager().getSharedPreferences(),findPreference(CALLBACK_URL));
         //        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -42,12 +42,12 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     @Deprecated
     public void onSharedPreferenceChanged(SharedPreferences sharedPrefs, String key)
     {
-        if (key.equals(CALLBACK_URL))
-        {
-            Preference connPref = findPreference(key);
-//            connPref.setSummary(sharedPrefs.getString(key, "test"));
+//        if (key.equals(CALLBACK_URL))
+//        {
+//            Preference connPref = findPreference(key);
+////            connPref.setSummary(sharedPrefs.getString(key, "test"));
 //            updatePrefSummary(sharedPrefs, findPreference(key));
-        }
+//        }
     }
 
 //    protected void initSummary()

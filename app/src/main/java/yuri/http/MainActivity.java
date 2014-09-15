@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity
         prefs.registerOnSharedPreferenceChangeListener(listener);
 
         // read callbackURL from settings
-        callbackURL = prefs.getString(SettingsActivity.CALLBACK_URL, ID_CALLBACK_URL);
+        callbackURL = prefs.getString(SettingsFragment.CALLBACK_URL, ID_CALLBACK_URL);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class MainActivity extends ActionBarActivity
         public void onSharedPreferenceChanged(SharedPreferences prefs, String key)
         {
             // set callbackURL
-            callbackURL = prefs.getString(SettingsActivity.CALLBACK_URL, ID_CALLBACK_URL);
+            callbackURL = prefs.getString(SettingsFragment.CALLBACK_URL, ID_CALLBACK_URL);
         }
     }
 

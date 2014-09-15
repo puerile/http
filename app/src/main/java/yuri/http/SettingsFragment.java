@@ -3,7 +3,6 @@ package yuri.http;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -12,6 +11,8 @@ import android.preference.PreferenceFragment;
 
 public class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener
 {
+    public static final String CALLBACK_URL = "callbackURL";
+
     public SettingsFragment()
     {
         // Required empty public constructor
@@ -24,7 +25,10 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 
         // load preferences from XML
         addPreferencesFromResource(R.xml.preferences);
-        addPreferencesFromResource(R.xml.preference_summary);
+        //        addPreferencesFromResource(R.xml.preference_summary);
+
+        // put the settings fragment on display
+        //        getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
     }
 
     @Override
@@ -37,6 +41,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
                 .registerOnSharedPreferenceChangeListener(this);
 
         initSummary();
+        updatePrefsSummary(getPreferenceScreen().getSharedPreferences(), findPreference(CALLBACK_URL));
     }
 
     @Override
@@ -53,6 +58,13 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
                                           String key)
     {
+        // change the preference
+        //        if (key.equals(CALLBACK_URL))
+        //        {
+        //            Preference connPref = findPreference(key);
+        //            //            connPref.setSummary(sharedPrefs.getString(key, "test"));
+        //            //            updatePrefSummary(sharedPrefs, findPreference(key));
+        //        }
 
         // Update summary
         updatePrefsSummary(sharedPreferences, findPreference(key));
@@ -61,7 +73,6 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
     protected void updatePrefsSummary(SharedPreferences sharedPreferences,
                                       Preference pref)
     {
-
         if (pref == null)
         {
             return;
@@ -72,7 +83,6 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
             // EditPreference
             EditTextPreference editTextPref = (EditTextPreference) pref;
             editTextPref.setSummary(editTextPref.getText());
-
         }
     }
 
@@ -82,6 +92,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
     protected void initSummary()
     {
         int pcsCount = getPreferenceScreen().getPreferenceCount();
+
         for (int i = 0; i < pcsCount; i++)
         {
             initPrefsSummary(getPreferenceManager().getSharedPreferences(),
@@ -99,6 +110,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
         {
             PreferenceCategory pCat = (PreferenceCategory) p;
             int pcCatCount = pCat.getPreferenceCount();
+
             for (int i = 0; i < pcCatCount; i++)
             {
                 initPrefsSummary(sharedPreferences, pCat.getPreference(i));
