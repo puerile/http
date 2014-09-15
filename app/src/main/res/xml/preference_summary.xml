@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/action_settings">
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogTitle="@string/setCallbackURL"
+            android:key="pref_"
+            android:title="@string/callbackURL"/>
+    </PreferenceCategory>
+</PreferenceScreen>

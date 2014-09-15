@@ -1,0 +1,6 @@
+<root>
+    <item
+        name='android.preference.PreferenceActivity android.preference.PreferenceScreen getPreferenceScreen()'>
+        <annotation name='java.lang.annotation.Deprecated'/>
+    </item>
+</root>

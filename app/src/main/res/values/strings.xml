@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HTTP!</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_call">call me maybe</string>
+    <string name="disconnected">no internet connection</string>
+    <string name="callbackURL">Callback URL</string>
+    <string name="callbackUrlSummary">Callback URL Summary</string>
+    <string name="setCallbackURL">Callback URL:</string>
+    <string name="noCallbackURL">please set callback URL first</string>
+
+</resources>
