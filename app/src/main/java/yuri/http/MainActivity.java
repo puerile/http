@@ -1,5 +1,6 @@
 package yuri.http;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,25 +9,22 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompatSideChannelService;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import android.preference.PreferenceFragment;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends Activity
 {
     private static final String DEBUG_TAG = "HTTP!";
     private static final String ID_CALLBACK_URL = "callbackURL";
     private String callbackURL = "";
-    SharedPreferences.OnSharedPreferenceChangeListener listener = new PreferenceChangeListener();
+    private SharedPreferences.OnSharedPreferenceChangeListener listener = new PreferenceChangeListener();
 
     // standard methods
 
@@ -37,7 +35,7 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         // make home button usable
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -88,6 +86,7 @@ public class MainActivity extends ActionBarActivity
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -108,20 +107,12 @@ public class MainActivity extends ActionBarActivity
     // functionality stuff
 
     // check if there's a network connection
-    public boolean checkConnection()
+    private boolean checkConnection()
     {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
 
-        if (netInfo != null && netInfo.isConnected())
-        {
-            return true;
-        }
-
-        else
-        {
-            return false;
-        }
+        return netInfo != null && netInfo.isConnected();
     }
 
     // make an HTTP call when the button is pressed
@@ -199,6 +190,7 @@ public class MainActivity extends ActionBarActivity
         {
             toast = Toast.makeText(context, msg, duration);
         }
+
         else
         {
             toast = Toast.makeText(context, callbackURL + ": " + msg, duration);

@@ -6,7 +6,6 @@
     <string name="button_call">call me maybe</string>
     <string name="disconnected">no internet connection</string>
     <string name="callbackURL">Callback URL</string>
-    <string name="callbackUrlSummary">Callback URL Summary</string>
     <string name="setCallbackURL">Callback URL:</string>
     <string name="noCallbackURL">please set callback URL first</string>
 

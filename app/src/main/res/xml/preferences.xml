@@ -4,5 +4,6 @@
     <EditTextPreference
         android:key="callbackURL"
         android:title="@string/callbackURL"
+        android:dialogTitle="@string/setCallbackURL"
         android:defaultValue=""/>
 </PreferenceScreen>

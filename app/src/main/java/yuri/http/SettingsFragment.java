@@ -25,7 +25,6 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 
         // load preferences from XML
         addPreferencesFromResource(R.xml.preferences);
-        //        addPreferencesFromResource(R.xml.preference_summary);
 
         // put the settings fragment on display
         //        getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
@@ -71,7 +70,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
     }
 
     protected void updatePrefsSummary(SharedPreferences sharedPreferences,
-                                      Preference pref)
+                            Preference pref)
     {
         if (pref == null)
         {
@@ -104,7 +103,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
      * Init single Preference
      */
     protected void initPrefsSummary(SharedPreferences sharedPreferences,
-                                    Preference p)
+                          Preference p)
     {
         if (p instanceof PreferenceCategory)
         {
