@@ -15,7 +15,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 
     public SettingsFragment()
     {
-        // Required empty public constructor
+        // required empty public constructor
     }
 
     @Override
@@ -25,9 +25,6 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 
         // load preferences from XML
         addPreferencesFromResource(R.xml.preferences);
-
-        // put the settings fragment on display
-        //        getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
     }
 
     @Override
@@ -35,12 +32,12 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
     {
         super.onResume();
 
-        // Set up a listener whenever a key changes
+        // set up a listener whenever a key changes
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
 
+        // initialise the pref summaries, so the values will be displayed
         initSummary();
-        updatePrefsSummary(getPreferenceScreen().getSharedPreferences(), findPreference(CALLBACK_URL));
     }
 
     @Override
@@ -48,7 +45,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
     {
         super.onPause();
 
-        // Unregister the listener whenever a key changes
+        // unregister the listener whenever a key changes
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
@@ -57,36 +54,12 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
                                           String key)
     {
-        // change the preference
-        //        if (key.equals(CALLBACK_URL))
-        //        {
-        //            Preference connPref = findPreference(key);
-        //            //            connPref.setSummary(sharedPrefs.getString(key, "test"));
-        //            //            updatePrefSummary(sharedPrefs, findPreference(key));
-        //        }
-
-        // Update summary
+        // update summary
         updatePrefsSummary(sharedPreferences, findPreference(key));
     }
 
-    protected void updatePrefsSummary(SharedPreferences sharedPreferences,
-                            Preference pref)
-    {
-        if (pref == null)
-        {
-            return;
-        }
-
-        if (pref instanceof EditTextPreference)
-        {
-            // EditPreference
-            EditTextPreference editTextPref = (EditTextPreference) pref;
-            editTextPref.setSummary(editTextPref.getText());
-        }
-    }
-
     /*
-     * Init summary
+     * init summary
      */
     protected void initSummary()
     {
@@ -94,26 +67,30 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 
         for (int i = 0; i < pcsCount; i++)
         {
-            initPrefsSummary(getPreferenceManager().getSharedPreferences(),
+            updatePrefsSummary(getPreferenceScreen().getSharedPreferences(),
                     getPreferenceScreen().getPreference(i));
         }
     }
 
     /*
-     * Init single Preference
+     * update summary after a change
      */
-    protected void initPrefsSummary(SharedPreferences sharedPreferences,
-                          Preference p)
+    protected void updatePrefsSummary(SharedPreferences sharedPreferences,
+                                      Preference pref)
     {
-        if (p instanceof PreferenceCategory)
+        // check if we have a preference
+        if (pref == null)
         {
-            PreferenceCategory pCat = (PreferenceCategory) p;
-            int pcCatCount = pCat.getPreferenceCount();
+            return;
+        }
 
-            for (int i = 0; i < pcCatCount; i++)
-            {
-                initPrefsSummary(sharedPreferences, pCat.getPreference(i));
-            }
+        // only do this if it's a text preference
+        // [there are no other preferences, so this is the only possibility]
+        else if (pref instanceof EditTextPreference)
+        {
+            // EditPreference
+            EditTextPreference editTextPref = (EditTextPreference) pref;
+            editTextPref.setSummary(editTextPref.getText());
         }
     }
 }

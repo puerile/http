@@ -14,20 +14,15 @@ public class SettingsActivity extends PreferenceActivity
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
     }
 
-    //    @Deprecated
     @Override
     protected void onResume()
     {
         super.onResume();
-//      //  updatePrefSummary(getPreferenceManager().getSharedPreferences(),findPreference(CALLBACK_URL));
-        //        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
-    //    @Deprecated
     @Override
     protected void onPause()
     {
         super.onPause();
-        //        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 }

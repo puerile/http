@@ -35,6 +35,7 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         // make home button usable
+        // [this was used in compatibility mode]
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -45,7 +46,7 @@ public class MainActivity extends Activity
 
         // register settings listener
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.registerOnSharedPreferenceChangeListener(listener);
+//        prefs.registerOnSharedPreferenceChangeListener(listener);
 
         // read callbackURL from settings
         callbackURL = prefs.getString(SettingsFragment.CALLBACK_URL, ID_CALLBACK_URL);
@@ -57,8 +58,8 @@ public class MainActivity extends Activity
         super.onPause();
 
         // unregister settings listener
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.unregisterOnSharedPreferenceChangeListener(listener);
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        prefs.unregisterOnSharedPreferenceChangeListener(listener);
     }
 
 
@@ -115,10 +116,10 @@ public class MainActivity extends Activity
         return netInfo != null && netInfo.isConnected();
     }
 
-    // make an HTTP call when the button is pressed
+    // start an HTTP call when the button is pressed
     public void httpCall(View view)
     {
-        // first check if there's a connection to the network
+        // first check if there's a connection to the internet
         if (checkConnection())
         {
             // check if there's a callback URL set
@@ -135,22 +136,28 @@ public class MainActivity extends Activity
             }
         }
 
+        // if there's no network connection, display a warning
         else
         {
             toast(getResources().getString(R.string.disconnected));
         }
     }
 
+    // make the actual HTTP request
     private class httpCallTask extends AsyncTask<String, Void, String>
     {
+        // save the response, so it can be displayed as a toast later
         String response;
 
+        // start a new thread for the connection,
+        // in case network is slow and it takes a while
         @Override
         protected String doInBackground(String... url)
         {
             try
             {
                 // try to make the call
+                // url[0] is the URL
                 HttpURLConnection conn = (HttpURLConnection) new URL(url[0]).openConnection();
                 conn.setReadTimeout(10000 /* milliseconds */);
                 conn.setConnectTimeout(15000 /* milliseconds */);
@@ -166,6 +173,7 @@ public class MainActivity extends Activity
 
             catch (Exception e)
             {
+                // write stuff in the debug log and save the error message
                 Log.e(DEBUG_TAG, e.toString());
                 response = e.getMessage();
                 return e.getMessage();
@@ -175,6 +183,9 @@ public class MainActivity extends Activity
         @Override
         protected void onPostExecute(String result)
         {
+            // display whatever the result of the HTTP request was as a toast
+            // [or the error message if there was an exception,
+            // which is hopefully never the case]
             toast(response);
         }
     }
@@ -183,14 +194,16 @@ public class MainActivity extends Activity
     private void toast(String msg)
     {
         Context context = getApplicationContext();
-        int duration = Toast.LENGTH_LONG;
+        int duration = Toast.LENGTH_LONG; // we want some time to actually read the message if it's not simply "OK"
         Toast toast;
 
+        // if something went wrong just display the error message
         if (!msg.equals("OK"))
         {
             toast = Toast.makeText(context, msg, duration);
         }
 
+        // otherwise, display which host was queried
         else
         {
             toast = Toast.makeText(context, callbackURL + ": " + msg, duration);
