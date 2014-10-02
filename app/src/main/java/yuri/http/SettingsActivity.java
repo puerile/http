@@ -1,5 +1,6 @@
 package yuri.http;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 

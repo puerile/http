@@ -1,6 +1,7 @@
 package yuri.http;
 
 import android.app.Activity;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +23,7 @@ import java.net.URL;
 public class MainActivity extends Activity
 {
     private static final String DEBUG_TAG = "HTTP!";
-    private static final String ID_CALLBACK_URL = "callbackURL";
+    private static final String CALLBACK_URL = "callbackURL";
     private String callbackURL = "";
     private SharedPreferences.OnSharedPreferenceChangeListener listener = new PreferenceChangeListener();
 
@@ -32,11 +33,16 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        if (prefs.getInt(SettingsFragment.THEME, 1) == 0)
+//        {
+//            setTheme(android.R.style.Theme_Holo_Light);
+//        }
         setContentView(R.layout.activity_main);
 
         // make home button usable
         // [this was used in compatibility mode]
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+//                getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -46,10 +52,18 @@ public class MainActivity extends Activity
 
         // register settings listener
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        prefs.registerOnSharedPreferenceChangeListener(listener);
+        //        prefs.registerOnSharedPreferenceChangeListener(listener);
 
         // read callbackURL from settings
-        callbackURL = prefs.getString(SettingsFragment.CALLBACK_URL, ID_CALLBACK_URL);
+        try
+        {
+            callbackURL = prefs.getString(CALLBACK_URL, "");
+        }
+
+        catch (NullPointerException e)
+        {
+            toast(e.getMessage());
+        }
     }
 
     @Override
@@ -58,8 +72,8 @@ public class MainActivity extends Activity
         super.onPause();
 
         // unregister settings listener
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        prefs.unregisterOnSharedPreferenceChangeListener(listener);
+        //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //        prefs.unregisterOnSharedPreferenceChangeListener(listener);
     }
 
 
@@ -100,7 +114,11 @@ public class MainActivity extends Activity
         public void onSharedPreferenceChanged(SharedPreferences prefs, String key)
         {
             // set callbackURL
-            callbackURL = prefs.getString(SettingsFragment.CALLBACK_URL, ID_CALLBACK_URL);
+            callbackURL = prefs.getString(CALLBACK_URL, CALLBACK_URL);
+
+            // set theme
+            setTheme(android.R.style.Theme_Holo_Light);
+            recreate();
         }
     }
 
@@ -146,9 +164,6 @@ public class MainActivity extends Activity
     // make the actual HTTP request
     private class httpCallTask extends AsyncTask<String, Void, String>
     {
-        // save the response, so it can be displayed as a toast later
-        String response;
-
         // start a new thread for the connection,
         // in case network is slow and it takes a while
         @Override
@@ -166,16 +181,14 @@ public class MainActivity extends Activity
 
                 // write the HTTP response into the debug log
                 Log.d(DEBUG_TAG, "response: " + conn.getResponseCode());
-
-                response = conn.getResponseMessage();
-                return conn.getResponseMessage();
+				
+				return conn.getResponseMessage();
             }
 
             catch (Exception e)
             {
                 // write stuff in the debug log and save the error message
                 Log.e(DEBUG_TAG, e.toString());
-                response = e.getMessage();
                 return e.getMessage();
             }
         }
@@ -186,12 +199,12 @@ public class MainActivity extends Activity
             // display whatever the result of the HTTP request was as a toast
             // [or the error message if there was an exception,
             // which is hopefully never the case]
-            toast(response);
+            toast(result);
         }
     }
 
     // show [system] messages as pop-ups
-    private void toast(String msg)
+    protected void toast(String msg)
     {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_LONG; // we want some time to actually read the message if it's not simply "OK"

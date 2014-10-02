@@ -8,8 +8,8 @@ android {
         applicationId "yuri.http"
         minSdkVersion 15
         targetSdkVersion 20
-        versionCode 1
-        versionName "1.0"
+        versionCode 0
+        versionName "0.1"
     }
     buildTypes {
         release {

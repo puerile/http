@@ -4,14 +4,16 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.util.Log;
 
 
 public class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener
 {
-    public static final String CALLBACK_URL = "callbackURL";
+    public static final String THEME = "theme";
 
     public SettingsFragment()
     {
@@ -91,6 +93,13 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
             // EditPreference
             EditTextPreference editTextPref = (EditTextPreference) pref;
             editTextPref.setSummary(editTextPref.getText());
+        }
+
+        else if (pref instanceof ListPreference)
+        {
+            // ListPreference
+            //            ListPreference listPref = (ListPreference) pref;
+            //            listPref.setSummary(listPref.getEntry());
         }
     }
 }

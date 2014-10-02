@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- menu labels -->
     <string name="app_name">HTTP!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- button labels -->
     <string name="button_call">call me maybe</string>
-    <string name="disconnected">no internet connection</string>
+
+    <!-- setting labels -->
     <string name="callbackURL">Callback URL</string>
     <string name="setCallbackURL">Callback URL:</string>
+    <string name="theme">Theme</string>
+    <string name="setTheme">Theme:</string>
+
+    <!-- messages -->
+    <string name="disconnected">no internet connection</string>
     <string name="noCallbackURL">please set callback URL first</string>
 
 </resources>
