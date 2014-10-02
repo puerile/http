@@ -33,16 +33,16 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        if (prefs.getInt(SettingsFragment.THEME, 1) == 0)
-//        {
-//            setTheme(android.R.style.Theme_Holo_Light);
-//        }
+        //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //        if (prefs.getInt(SettingsFragment.THEME, 1) == 0)
+        //        {
+        //            setTheme(android.R.style.Theme_Holo_Light);
+        //        }
         setContentView(R.layout.activity_main);
 
         // make home button usable
         // [this was used in compatibility mode]
-//                getActionBar().setDisplayHomeAsUpEnabled(true);
+        //                getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -181,8 +181,8 @@ public class MainActivity extends Activity
 
                 // write the HTTP response into the debug log
                 Log.d(DEBUG_TAG, "response: " + conn.getResponseCode());
-				
-				return conn.getResponseMessage();
+
+                return conn.getResponseMessage();
             }
 
             catch (Exception e)
